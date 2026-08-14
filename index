@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia SENAI-RS - Aprendizagem Industrial</title>
+    <!-- Biblioteca para gerar PDF diretamente -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            margin: 40px 50px;
+            color: #1a1a1a;
+            line-height: 1.6;
+            background-color: #ffffff;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 4px solid #003399;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            color: #003399;
+            font-size: 32px;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .header h2 {
+            color: #555;
+            font-size: 20px;
+            font-weight: normal;
+            margin: 5px 0 0 0;
+        }
+        .subheader {
+            background-color: #f2f4f8;
+            padding: 15px 25px;
+            border-left: 8px solid #003399;
+            margin-bottom: 30px;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+        }
+        .download-btn {
+            background-color: #003399;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s;
+            margin: 10px 0 20px 0;
+            box-shadow: 0 4px 12px rgba(0,51,153,0.2);
+        }
+        .download-btn:hover {
+            background-color: #002266;
+        }
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        h3 {
+            color: #003399;
+            font-size: 22px;
+            margin-top: 35px;
+            border-bottom: 2px solid #d9e1ec;
+            padding-bottom: 10px;
+        }
+        h4 {
+            color: #003399;
+            font-size: 18px;
+            margin-top: 25px;
+        }
+        h5 {
+            color: #003399;
+            font-size: 16px;
+            margin-top: 18px;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+        th {
+            background-color: #003399;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        td {
+            border: 1px solid #d0d7e5;
+            padding: 10px 14px;
+            vertical-align: top;
+        }
+        .highlight-box {
+            background-color: #e6f0fa;
+            border: 1px solid #003399;
+            padding: 20px 25px;
+            border-radius: 6px;
+            margin: 25px 0;
+        }
+        .highlight-box strong {
+            color: #003399;
+        }
+        .certidao-box {
+            background-color: #f0f7ff;
+            border: 2px solid #00875a;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .certidao-box strong {
+            color: #00875a;
+        }
+        .calculator-box {
+            background-color: #f0f5ff;
+            border: 2px solid #003399;
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .calculator-box input {
+            padding: 10px;
+            font-size: 18px;
+            width: 200px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+        .calculator-box button {
+            background-color: #003399;
+            color: white;
+            padding: 10px 35px;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .calculator-box button:hover {
+            background-color: #002266;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 15px 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 17px;
+        }
+        .disclaimer {
+            background-color: #fff5e6;
+            border-left: 6px solid #cc7a00;
+            padding: 12px 18px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #664400;
+            border-radius: 4px;
+            display: none;
+        }
+        ul, ol {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .footer {
+            margin-top: 45px;
+            border-top: 2px solid #ccc;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        .badge {
+            background-color: #003399;
+            color: #fff;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            display: inline-block;
+        }
+        .badge-orange {
+            background-color: #cc7a00;
+            color: #fff;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            display: inline-block;
+        }
+        .badge-green {
+            background-color: #00875a;
+            color: #fff;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            display: inline-block;
+        }
+        .checklist-box {
+            background-color: #f9fafc;
+            padding: 18px 25px;
+            border-radius: 6px;
+            border: 1px solid #e0e4ed;
+        }
+        .mission-quote {
+            font-size: 20px;
+            font-style: italic;
+            color: #003399;
+            text-align: center;
+            padding: 10px 0;
+        }
+        @media print {
+            body { margin: 20px; }
+            .calculator-box button { background-color: #003399 !important; }
+            .download-btn { display: none !important; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== BOTÃO DE DOWNLOAD (visível apenas na tela) ===== -->
+<div style="text-align: center;" class="no-print">
+    <button class="download-btn" id="downloadPdfBtn">
+        📄 Baixar em PDF
+    </button>
+    <p style="font-size: 14px; color: #666; margin-top: -10px;">Clique para gerar e baixar o PDF completo</p>
+</div>
+
+<!-- ===== CONTEÚDO PRINCIPAL (será convertido para PDF) ===== -->
+<div id="content-to-pdf">
+
+<div class="header">
+    <h1>Programa de Aprendizagem Industrial</h1>
+    <h2>SENAI-RS | Guia Completo para Indústrias</h2>
+    <p style="font-size: 15px; color: #666; margin-top: 8px;">Ferramenta estratégica para Agentes de Relacionamento e Decisores Empresariais</p>
+</div>
+
+<div class="subheader">
+    <strong>🎯 Objetivo:</strong> Fornecer às indústrias gaúchas um guia abrangente e exclusivo sobre o Programa de Aprendizagem Industrial do SENAI-RS, abordando <strong>alguns importantes aspectos legais</strong>, operacionais e estratégicos para a tomada de decisão e contratação do serviço com a maior rede de educação profissional da América Latina.
+</div>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 1: CONCEITOS FUNDAMENTAIS                              -->
+<!-- ============================================================ -->
+<h3>1. Fundamentos da Aprendizagem Profissional</h3>
+
+<h4>1.1. O que é Aprendizagem Profissional?</h4>
+<p>A <strong>Aprendizagem Profissional</strong> é um instrumento de qualificação profissional para adolescentes e jovens, concretizado por meio da obrigação legal de cumprimento de cota de contratação de aprendizes pelos empregadores. Ela se caracteriza pela oferta de <strong>formação técnico-profissional metódica</strong>, desenvolvida por meio de atividades teóricas e práticas, organizadas em tarefas de complexidade progressiva.</p>
+<p>A principal especificidade deste instituto é seu <strong>caráter propedêutico (introdutório)</strong>, que visa oferecer formação adequada às necessidades de adolescentes e jovens, para que se desenvolvam como trabalhadores e cidadãos, mais preparados para enfrentar os desafios e acessar as oportunidades da <strong>Era Digital</strong>.</p>
+<p><span class="badge">Fundamento Legal</span> A Aprendizagem Profissional é uma política pública prevista na <strong>Constituição Federal</strong> (art. 227) e regulamentada pelos arts. <strong>428 a 434 da CLT</strong>, com alterações promovidas pela <strong>Lei nº 10.097/2000</strong> (Lei da Aprendizagem), atualmente regulamentada pelo <strong>Decreto nº 9.579/2018</strong>, com as alterações introduzidas pelo <strong>Decreto nº 11.479/2023</strong>.</p>
+
+<h4>1.2. O Contrato de Aprendizagem</h4>
+<p>É o <strong>contrato de trabalho especial</strong>, ajustado por escrito e por prazo determinado, em que o empregador se compromete a assegurar ao aprendiz, inscrito em programa de Aprendizagem Profissional, formação técnico-profissional metódica compatível com o seu desenvolvimento físico, moral e psicológico.</p>
+<table>
+    <tr><th style="width: 25%;">Característica</th><th>Descrição</th></tr>
+    <tr><td><strong>Natureza</strong></td><td>Contrato de trabalho especial, distinto do contrato comum (art. 428, CLT).</td></tr>
+    <tr><td><strong>Forma</strong></td><td>Obrigatoriamente por escrito.</td></tr>
+    <tr><td><strong>Prazo</strong></td><td>Determinado, com duração máxima de <strong>2 anos</strong> (exceto para PCD).</td></tr>
+    <tr><td><strong>Objeto principal</strong></td><td>Formação profissional, e não a produção de bens ou serviços.</td></tr>
+    <tr><td><strong>Partes</strong></td><td><strong>Empregador</strong> e <strong>aprendiz</strong> (assistido pelo responsável legal se menor de 18 anos). O SENAI atua como <strong>entidade qualificadora interveniente</strong>, não sendo parte do contrato.</td></tr>
+</table>
+
+<h4>1.3. Requisitos de Validade do Contrato</h4>
+<ol>
+    <li><strong>Anotação na Carteira de Trabalho e Previdência Social (CTPS)</strong> – atualmente realizada por meio do sistema eSocial (categoria 103).</li>
+    <li><strong>Matrícula e frequência do aprendiz à escola</strong>, caso não tenha concluído o Ensino Médio.</li>
+    <li><strong>Inscrição do aprendiz em programa de Aprendizagem Profissional</strong> desenvolvido por entidade qualificada em formação técnico-profissional metódica, como o SENAI-RS.</li>
+</ol>
+<p><span class="badge-orange">Atenção</span> A ausência de qualquer um desses requisitos pode levar à <strong>descaracterização do contrato</strong>, com consequente reconhecimento de vínculo empregatício por prazo indeterminado.</p>
+
+<h4>1.4. O Programa de Aprendizagem Profissional</h4>
+<p>O programa de Aprendizagem Profissional é o plano técnico-pedagógico que prevê a execução de atividades teóricas e práticas, sob orientação pedagógica de entidade qualificada. Ele deve seguir as normas fixadas pelo Ministério do Trabalho e Emprego (MTE), conforme a <strong>Portaria MTE nº 3.872/2023</strong> (que revogou a Portaria MTP nº 671/2021).</p>
+<p><strong>Elementos obrigatórios no programa (elaborados pela entidade formadora):</strong></p>
+<ul>
+    <li><strong>Público-alvo</strong> e número máximo de aprendizes por turma.</li>
+    <li><strong>Perfil socioeconômico</strong> do aprendiz e justificativa para seu atendimento.</li>
+    <li><strong>Objetivos</strong> do programa, com especificação de conteúdos e atividades.</li>
+    <li><strong>Temas</strong> a serem desenvolvidos, incluindo conhecimentos, habilidades e competências alinhados à Indústria 4.0.</li>
+    <li><strong>Estrutura</strong> e duração total em horas, respeitando a proporção entre teoria e prática.</li>
+    <li><strong>Mecanismos</strong> de acompanhamento, avaliação e inserção no mercado de trabalho.</li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 1.5 – MISSÃO DO SENAI                                  -->
+<!-- ============================================================ -->
+<h4>1.5. A Missão do SENAI e o Impacto da Aprendizagem Industrial</h4>
+
+<div class="highlight-box">
+    <p class="mission-quote">“A aprendizagem profissional não é apenas uma atividade do SENAI — é a razão pela qual o SENAI nasceu: formar jovens para transformar a indústria e construir o futuro do Brasil.”</p>
+</div>
+
+<p>Desde sua criação, fundamentada pelo <strong>Decreto-Lei nº 4.048 de 22 de janeiro de 1942</strong>, o Serviço Nacional de Aprendizagem Industrial (SENAI) tem desempenhado papel essencial na formação de profissionais qualificados para atender às demandas da indústria brasileira. No Rio Grande do Sul, essa missão é fortalecida por meio de programas educacionais que promovem inclusão, inovação e desenvolvimento humano — entre eles, destaca-se o <strong>Programa Jovem Aprendiz</strong>.</p>
+
+<p>A modalidade de aprendizagem profissional oferecida pelo SENAI-RS representa uma oportunidade concreta de <strong>transformação social e econômica</strong>. Jovens entre 14 e 24 anos têm acesso gratuito a cursos de Aprendizagem Básica e Aprendizagem Técnica em áreas estratégicas para o setor industrial, como <strong>eletromecânica, automação, tecnologia da informação, logística e construção civil</strong>, entre outras. Essa formação é realizada em ambientes pedagógicos modernos, alinhados às exigências da <strong>Indústria 4.0</strong>, garantindo que os aprendizes estejam preparados para os desafios do mercado de trabalho contemporâneo.</p>
+
+<p>Além de atender à legislação vigente — como a Lei da Aprendizagem (Lei nº 10.097/2000) — o SENAI-RS atua como <strong>parceiro estratégico</strong> das empresas gaúchas, oferecendo soluções educacionais que contribuem para o desenvolvimento de jovens e para o fortalecimento da competitividade industrial.</p>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 2: PERFIL DO APRENDIZ E PRIORIDADES                   -->
+<!-- ============================================================ -->
+<h3>2. Perfil do Aprendiz e Prioridades Legais</h3>
+
+<h4>2.1. Quem pode ser Aprendiz?</h4>
+<table>
+    <tr><th style="width: 25%;">Público</th><th>Requisitos e Observações</th></tr>
+    <tr><td><strong>Jovens de 14 a 24 anos incompletos</strong></td>
+        <td>Devem estar matriculados e frequentando a escola regular, caso não tenham concluído o Ensino Médio (§ 1º do art. 428 da CLT).<br>
+        <em>Exceção:</em> Nas localidades sem oferta de Ensino Médio, a contratação pode ocorrer sem frequência escolar, desde que o jovem já tenha concluído o Ensino Fundamental (art. 428, § 7º, CLT).</td>
+    </tr>
+    <tr><td><strong>Pessoas com Deficiência (PCD)</strong></td>
+        <td><strong>Sem limite máximo de idade</strong> (art. 428, § 5º, CLT).<br>
+        A exigência de comprovação de escolaridade deve considerar as habilidades e competências relacionadas com a profissionalização (art. 428, §6º e §8º).</td>
+    </tr>
+</table>
+
+<h4>2.2. Prioridade na Contratação (14 a 18 anos)</h4>
+<p>É assegurada prioridade aos adolescentes na faixa etária entre <strong>14 e 18 anos incompletos</strong>.</p>
+<p><strong>Exceções (contratação de 18 a 24 anos):</strong></p>
+<ul>
+    <li>Atividades práticas em ambientes <strong>insalubres ou perigosos</strong>, sem possibilidade de ambiente simulado.</li>
+    <li>Atividades que exijam, por lei, <strong>licença ou autorização vedada</strong> para menores de 18 anos.</li>
+    <li>Atividades incompatíveis com o <strong>desenvolvimento físico, psicológico e moral</strong> do adolescente.</li>
+</ul>
+<p><span class="badge">Boa Prática SENAI</span> Para atividades proibidas, a entidade formadora (SENAI) oferece <strong>práticas protegidas em laboratórios</strong>, eliminando totalmente o risco para adolescentes com idade menor que 18 anos.</p>
+
+<h4>2.3. Prioridade Social (Vulnerabilidade)</h4>
+<p>A seleção deve priorizar jovens em situação de <strong>vulnerabilidade ou risco social</strong>, tais como: egressos do sistema socioeducativo, beneficiários de programas de transferência de renda, jovens em acolhimento institucional, egressos do trabalho infantil, jovens com deficiência, matriculados na rede pública, ou jovens desempregados com ensino fundamental/médio concluído na rede pública.</p>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 2.4 – PSAI                                             -->
+<!-- ============================================================ -->
+<h4>2.4. Compromisso com a Inclusão: Programa SENAI de Ações Inclusivas (PSAI)</h4>
+<p>O SENAI-RS tem um compromisso estrutural com a <strong>inclusão produtiva</strong>. Por meio do <strong>Programa SENAI de Ações Inclusivas (PSAI)</strong>, a instituição amplia o acesso à educação profissional para públicos em situação de vulnerabilidade social, promovendo <strong>equidade e diversidade</strong> no ambiente industrial.</p>
+<p>O PSAI atua em diversas frentes, garantindo que jovens de diferentes origens e condições tenham oportunidades reais de qualificação e inserção no mercado de trabalho. Essa atuação reforça o <strong>papel social do SENAI</strong> como agente de transformação e desenvolvimento sustentável, contribuindo para a redução das desigualdades e para a construção de uma indústria mais inclusiva e representativa.</p>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 3: COTA DE APRENDIZAGEM E CÁLCULO                     -->
+<!-- ============================================================ -->
+<h3>3. Cota de Aprendizagem: Obrigações e Cálculo Detalhado</h3>
+
+<h4>3.1. Quando surge a obrigação?</h4>
+<p>A obrigação surge quando o estabelecimento (CNPJ) possui <strong>7 (sete) ou mais empregados</strong> em funções que demandem formação profissional. A cota é calculada <strong>por estabelecimento</strong> — cada filial tem sua própria cota.</p>
+
+<h4>3.2. Percentuais da Cota</h4>
+<table>
+    <tr><th>Percentual</th><th>Descrição</th></tr>
+    <tr><td><strong>Mínimo: 5%</strong></td><td>Percentual mínimo de aprendizes sobre a base de cálculo.</td></tr>
+    <tr><td><strong>Máximo: 15%</strong></td><td>Limite máximo para evitar substituição de mão de obra adulta.</td></tr>
+    <tr><td><strong>Frações</strong></td><td>Qualquer fração de unidade no cálculo (ex: 4,3) dá lugar à admissão de <strong>+1 aprendiz</strong> (arredondamento para cima).</td></tr>
+</table>
+
+<h4>3.3. Base de Cálculo: O que entra e o que sai</h4>
+<p><strong>Excluem-se da base de cálculo:</strong></p>
+<ul>
+    <li>Funções que exigem <strong>nível superior</strong> (art. 429, §2º, CLT).</li>
+    <li>Funções que exigem <strong>nível médio técnico</strong> (art. 429, §2º, CLT).</li>
+    <li><strong>Cargos de direção, gerência ou confiança</strong> (art. 62, II, e art. 224, §2º, CLT).</li>
+    <li><strong>Empregados temporários</strong> (Lei nº 6.019/1973).</li>
+    <li><strong>Aprendizes já contratados</strong>.</li>
+</ul>
+<p><span class="badge-orange">Importante</span> A exclusão é da <strong>função</strong>, não do empregado.</p>
+
+<h4>3.4. Estabelecimentos Obrigados, Dispensados e Facultados</h4>
+<table>
+    <tr><th style="width: 25%;">Classificação</th><th>Descrição</th></tr>
+    <tr><td><strong>Obrigados</strong></td>
+        <td>Empresas de médio/grande porte com ≥ 7 empregados em funções que demandem formação profissional.</td>
+    </tr>
+    <tr><td><strong>Dispensados</strong></td>
+        <td>Microempresas (ME) e Empresas de Pequeno Porte (EPP); Administração Pública direta, autárquica e fundacional (regime estatutário).</td>
+    </tr>
+    <tr><td><strong>Facultados</strong></td>
+        <td>Podem contratar voluntariamente, observando as regras: ME/EPP (limitado a 15%).</td>
+    </tr>
+</table>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO: CERTIDÃO DE REGULARIDADE                              -->
+<!-- ============================================================ -->
+<h4>3.5. Certidão de Regularidade na Contratação de Aprendizes</h4>
+<p>A <strong>Certidão de Regularidade na Contratação de Aprendizes</strong> é um documento emitido pelo Ministério do Trabalho e Emprego (MTE) que atesta se uma empresa está em conformidade com a cota de aprendizagem prevista no art. 429 da CLT.</p>
+
+<p><span class="badge-green">Atualização Legal</span> Este serviço está em conformidade com o <strong>art. 51, § 3º, do Decreto nº 9.579/2018</strong>, incluído pelo <strong>Decreto nº 11.479/2023</strong>, que determina a disponibilização de sistema eletrônico para emissão da certidão, garantindo transparência e agilidade na comprovação da regularidade.</p>
+
+<div class="certidao-box">
+    <p><span class="badge-green">🔍 Consulta Pública</span> <strong>É possível verificar a situação de uma empresa em relação à cota de aprendizagem diretamente pelo Ministério do Trabalho e Emprego.</strong></p>
+    <p>O sistema permite:</p>
+    <ul>
+        <li><strong>Emissão da Certidão de Regularidade</strong> – para comprovação da situação perante órgãos públicos, licitações e auditorias.</li>
+        <li><strong>Consulta por CNPJ</strong> – para verificar se a empresa está cumprindo a cota legal de aprendizes.</li>
+        <li><strong>Verificação de pendências</strong> – identificação de eventuais débitos ou irregularidades relacionadas à aprendizagem.</li>
+    </ul>
+    <p style="margin-top: 15px;"><strong>📌 Acesse o serviço oficial:</strong></p>
+    <p style="font-size: 16px; background-color: #fff; padding: 10px 15px; border-radius: 4px; border: 1px solid #00875a; display: inline-block;">
+        <a href="https://certidoes.sit.trabalho.gov.br/aprendiz" target="_blank" style="color: #003399; font-weight: bold; text-decoration: none;">🔗 Emitir Certidão de Regularidade na Contratação de Aprendizes</a>
+    </p>
+    <p style="font-size: 13px; color: #555; margin-top: 10px;">Sistema oficial da Subsecretaria de Inspeção do Trabalho (SIT) – Ministério do Trabalho e Emprego.</p>
+</div>
+
+<p><strong>Para que serve a Certidão?</strong></p>
+<ul>
+    <li>Comprovação do cumprimento da cota de aprendizagem em processos licitatórios.</li>
+    <li>Exigência em auditorias fiscais e trabalhistas.</li>
+    <li>Documentação para participação em programas governamentais e convênios.</li>
+    <li>Verificação preventiva pela própria empresa para evitar autuações.</li>
+</ul>
+<p><span class="badge-orange">Importante:</span> A Certidão é um documento público e pode ser emitida a qualquer momento, sendo recomendável que as empresas mantenham sua situação regularizada e atualizada no sistema do MTE.</p>
+
+<!-- ============================================================ -->
+<!-- CALCULADORA DE COTAS                                         -->
+<!-- ============================================================ -->
+<div class="calculator-box">
+    <h3 style="margin-top: 0; border-bottom: none; color: #003399;">📊 Simulador de Cota de Aprendizagem</h3>
+    <p style="font-size: 15px;"><strong>Insira o número de empregados do seu estabelecimento (base de cálculo):</strong><br>
+    <span style="font-size: 13px; color: #555;">Lembre-se de excluir funções de nível superior, técnico, gerência/confiança e temporários.</span></p>
+    
+    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <input type="number" id="totalEmpregados" placeholder="Ex: 100" min="0" step="1" style="padding: 10px; font-size: 18px; width: 200px; border: 1px solid #aaa; border-radius: 4px;">
+        <button onclick="calcularCota()" style="background-color: #003399; color: white; padding: 10px 35px; font-size: 18px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Calcular Cota</button>
+    </div>
+
+    <div id="resultadoCota" class="result-box" style="background-color: #f9f9fc; margin-top: 20px; padding: 15px 20px; border: 1px solid #ccc; border-radius: 6px;">
+        <span style="color: #888;">Preencha o campo acima e clique em "Calcular Cota".</span>
+    </div>
+
+    <div id="disclaimerCota" class="disclaimer" style="background-color: #fff5e6; border-left: 6px solid #cc7a00; padding: 12px 18px; margin-top: 15px; font-size: 14px; color: #664400; border-radius: 4px; display: none;">
+        <strong>⚠️ Importante:</strong> Esta calculadora é uma <strong>ferramenta de simulação</strong> para fins orientativos. O número exato de aprendizes a serem contratados deve ser verificado junto à <strong>Auditoria-Fiscal do Trabalho</strong>, considerando as exclusões legais específicas de cada estabelecimento.
+    </div>
+</div>
+
+<script>
+    function calcularCota() {
+        var input = document.getElementById('totalEmpregados');
+        var resultDiv = document.getElementById('resultadoCota');
+        var disclaimerDiv = document.getElementById('disclaimerCota');
+        var total = input.value.trim();
+
+        if (total === "" || isNaN(total) || parseInt(total) < 0) {
+            resultDiv.innerHTML = "<span style='color: #cc0000;'>❌ Por favor, insira um número válido de empregados (ex: 50).</span>";
+            disclaimerDiv.style.display = 'none';
+            return;
+        }
+
+        var num = parseInt(total);
+        var min = Math.ceil(num * 0.05);
+        var max = Math.ceil(num * 0.15);
+
+        var outputHtml = "";
+        if (num < 7) {
+            outputHtml = "<strong>📌 Menos de 7 empregados:</strong> Sua empresa <strong>não é obrigada</strong> a contratar aprendizes por lei (cota facultativa).<br>" +
+                         "Caso opte pela contratação voluntária, o limite máximo é de <strong>" + max + "</strong> aprendiz(is).";
+        } else {
+            outputHtml = "<strong>📊 Estimativa de cota para o estabelecimento:</strong><br>" +
+                         "🔹 <strong>Mínimo:</strong> " + min + " aprendiz(is) (5%)<br>" +
+                         "🔹 <strong>Máximo:</strong> " + max + " aprendiz(is) (15%)";
+        }
+
+        resultDiv.innerHTML = outputHtml;
+        disclaimerDiv.style.display = 'block';
+    }
+
+    document.getElementById('totalEmpregados').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            calcularCota();
+        }
+    });
+</script>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 4: MODALIDADES DE FORMAÇÃO                             -->
+<!-- ============================================================ -->
+<h3>4. Modalidades de Formação Oferecidas pelo SENAI-RS</h3>
+
+<h4>4.1. Aprendizagem Industrial Básica (AIB)</h4>
+<p>Programa de qualificação profissional destinado à <strong>formação inicial</strong> para ocupações industriais de menor complexidade técnica.</p>
+<ul>
+    <li><strong>Foco:</strong> Iniciação profissional e execução de atividades operacionais.</li>
+    <li><strong>Conteúdo:</strong> Integra conhecimentos básicos de tecnologia, segurança, qualidade e processos produtivos.</li>
+    <li><strong>Exemplo:</strong> AIB Eletricista Industrial.</li>
+</ul>
+
+<h4>4.2. Aprendizagem Industrial Técnica (AIT)</h4>
+<p>Modalidade que integra a aprendizagem com a <strong>educação técnica de nível médio</strong>, proporcionando formação aprofundada e especializada.</p>
+<ul>
+    <li><strong>Foco:</strong> Desenvolvimento de competências técnicas complexas.</li>
+    <li><strong>Certificação:</strong> Diploma de técnico de nível médio reconhecido pelo MEC.</li>
+    <li><strong>Exemplo:</strong> AIT Técnico em Mecatrônica.</li>
+</ul>
+
+<h4>4.3. Quadro Comparativo AIB x AIT</h4>
+<table>
+    <tr><th>Aspecto</th><th>AIB (Básica)</th><th>AIT (Técnica)</th></tr>
+    <tr><td>Nível</td><td>Formação inicial</td><td>Técnico de nível médio</td></tr>
+    <tr><td>Complexidade</td><td>Menor</td><td>Maior</td></tr>
+    <tr><td>Pré-requisito</td><td>Ensino fundamental (em curso ou concluído)</td><td>Ensino médio (em curso ou concluído)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 4.4 – OFERTA COMPLETA DE CURSOS                       -->
+<!-- ============================================================ -->
+<h4>4.4. Amplitude da Oferta de Cursos do SENAI-RS</h4>
+
+<p>O SENAI-RS oferece uma das mais amplas e diversificadas carteiras de cursos de aprendizagem do país, abrangendo as principais áreas tecnológicas da indústria. A oferta é composta por <strong>mais de 70 cursos</strong> entre as modalidades <strong>Aprendizagem Industrial Básica (AIB)</strong> e <strong>Aprendizagem Industrial Técnica (AIT)</strong>, atendendo a diferentes níveis de complexidade e especialização.</p>
+
+<p>Os cursos estão organizados nas seguintes <strong>áreas tecnológicas</strong>, com exemplos representativos:</p>
+
+<table>
+    <tr>
+        <th style="width: 20%;">Área Tecnológica</th>
+        <th style="width: 45%;">Exemplos de Cursos (AIB)</th>
+        <th style="width: 35%;">Exemplos de Cursos (AIT)</th>
+    </tr>
+    <tr>
+        <td><strong>Eletroeletrônica e Automação</strong></td>
+        <td>Eletricista Industrial, Eletricista Predial, Eletromecânico de Manutenção Industrial, Instrumentista Industrial, Montador de Equipamentos Eletrônicos</td>
+        <td>Técnico em Automação Industrial, Técnico em Eletroeletrônica, Técnico em Eletrônica, Técnico em Cibersistemas para Automação, Técnico em Internet das Coisas</td>
+    </tr>
+    <tr>
+        <td><strong>Mecânica e Manutenção</strong></td>
+        <td>Mecânico de Manutenção de Máquinas Industriais, Mecânico de Usinagem, Mecânico Montador, Caldeireiro, Ferramenteiro, Soldador, Torneiro Mecânico</td>
+        <td>Técnico em Mecânica, Técnico em Mecatrônica, Técnico em Fabricação Mecânica, Técnico em Manutenção Automotiva, Técnico em Mecânico de Manutenção de Máquinas Industriais</td>
+    </tr>
+    <tr>
+        <td><strong>Tecnologia da Informação</strong></td>
+        <td>Desenvolvedor Mobile Android, Programador Full Stack, Assistente Administrativo (com ênfase em TI)</td>
+        <td>Técnico em Desenvolvimento de Sistemas, Técnico em Informática para Internet</td>
+    </tr>
+    <tr>
+        <td><strong>Logística e Gestão</strong></td>
+        <td>Operador de Processos Logísticos, Assistente Administrativo, Assistente Técnico de Vendas</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td><strong>Construção Civil e Edificações</strong></td>
+        <td>Edificador Predial, Carpinteiro de Estruturas de Telhados e Formas</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td><strong>Couro, Calçados e Artefatos</strong></td>
+        <td>Confeccionador de Artefatos de Couro, Confeccionador de Calçados, Costurador de Calçados, Curtidor de Couros</td>
+        <td>Técnico em Calçados, Técnico em Curtimento</td>
+    </tr>
+    <tr>
+        <td><strong>Alimentos e Bebidas</strong></td>
+        <td>Assistente de Operações em Processos de Fabricação de Alimentos e Bebidas, Operador de Processos de Abate e Desossa de Aves, Operador de Processos de Beneficiamento e Industrialização de Arroz</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td><strong>Plástico e Borracha</strong></td>
+        <td>Operador de Injetora de Plástico, Operador de Processo de Transformação de Borracha, Operador de Sistemas Automatizados de Transformação de Polímeros, Preparador de Máquina Injetora e Extrusora, Moldador de Plástico por Injeção</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td><strong>Gráfica e Design</strong></td>
+        <td>Arte Finalista, Impressor Gráfico</td>
+        <td>Técnico em Design de Móveis</td>
+    </tr>
+    <tr>
+        <td><strong>Metalurgia e Siderurgia</strong></td>
+        <td>Forjador Prensista</td>
+        <td>Técnico em Metalurgia</td>
+    </tr>
+    <tr>
+        <td><strong>Moveleira</strong></td>
+        <td>Programa de Aprendizagem Industrial em Projetos e Fabricações de Móveis, Estofador de Móveis, Marceneiro</td>
+        <td>—</td>
+    </tr>
+</table>
+
+<p><span class="badge-green">Destaque</span> Além dos exemplos listados, o SENAI-RS possui <strong>dezenas de outros cursos</strong> que podem ser consultados diretamente com a equipe de relacionamento, permitindo que a empresa escolha a formação mais alinhada à sua realidade produtiva.</p>
+
+<p>Todas as formações são ministradas em <strong>ambientes pedagógicos modernos</strong>, com laboratórios equipados com tecnologia de ponta e instrutores altamente qualificados, garantindo que os aprendizes estejam alinhados às exigências da <strong>Indústria 4.0</strong> e preparados para os desafios do mercado de trabalho contemporâneo.</p>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 5: MODELOS DE EXECUÇÃO E DIFERENCIAL EAD             -->
+<!-- ============================================================ -->
+<h3>5. Modelos de Execução e Diferencial EAD do SENAI-RS</h3>
+
+<h4>5.1. Aprendizagem Regular</h4>
+<p>Modelo tradicional: <strong>teoria na entidade formadora</strong> (SENAI) e <strong>prática na empresa</strong>. Alternância entre os ambientes com articulação por um plano de formação profissional.</p>
+
+<h4>5.2. Aprendizagem Dual</h4>
+<p>Inspirado no sistema alemão, a empresa assume papel <strong>ativo no processo de ensino</strong>, tornando-se um ambiente estruturado de aprendizagem.</p>
+<ul>
+    <li><strong>Integração:</strong> Elevada (teoria e prática profundamente conectadas).</li>
+    <li><strong>Papel da empresa:</strong> Ambiente de prática <strong>e</strong> de formação.</li>
+    <li><strong>Foco:</strong> Desenvolvimento de competências em situações reais de trabalho.</li>
+</ul>
+
+<h4>5.3. 🌟 Diferencial SENAI-RS: Aprendizagem Industrial Básica Dual EAD</h4>
+<p>O <strong>Programa Jovem Aprendiz EAD do SENAI-RS</strong> é uma modalidade inovadora desenvolvida para ampliar o acesso à formação profissional, atender às exigências legais e apoiar a qualificação de novos talentos para indústrias localizadas em regiões distantes das unidades físicas do SENAI. Combinando formação teórica online e prática dentro da empresa, o modelo garante um aprendizado conectado à realidade industrial.</p>
+
+<h5>5.3.1. Para sua empresa: muito além do cumprimento da cota</h5>
+<p>O programa foi estruturado para ser uma <strong>estratégia de desenvolvimento organizacional</strong>, oferecendo:</p>
+<ul>
+    <li><strong>Cumprimento da cota legal</strong> (5% a 15% dos colaboradores em funções qualificadas).</li>
+    <li><strong>Qualificação profissional</strong> alinhada à realidade da indústria.</li>
+    <li><strong>Captação e desenvolvimento</strong> de novos talentos.</li>
+    <li><strong>Fortalecimento da cultura organizacional</strong>.</li>
+    <li><strong>Modelo 100% gratuito</strong> para a indústria: o SENAI-RS realiza a formação profissional e o acompanhamento sem custos para a empresa.</li>
+</ul>
+<p>A oferta segue os critérios estabelecidos pela <strong>Portaria MTE nº 3.872/2023</strong> e foi desenhada para ampliar o acesso à formação, viabilizar turmas em cidades sem unidade SENAI e atender à demanda das indústrias por qualificação.</p>
+
+<h5>5.3.2. Estrutura do Programa</h5>
+<p><strong>Organização da Semana:</strong></p>
+<ul>
+    <li><strong>Aulas teóricas online (ao vivo):</strong> realizadas dentro da empresa, com o jovem utilizando um computador com acesso à internet.</li>
+    <li><strong>Atividades práticas na empresa:</strong> aplicação direta dos conhecimentos na rotina de trabalho.</li>
+</ul>
+<p><strong>Estrutura necessária da empresa:</strong></p>
+<ul>
+    <li>Computador com acesso à internet.</li>
+    <li>Espaço adequado para estudos.</li>
+    <li>Profissional responsável pelo acompanhamento do aprendiz.</li>
+</ul>
+<p><strong>Acompanhamento SENAI:</strong></p>
+<p>O SENAI-RS acompanha toda a jornada, oferecendo:</p>
+<ul>
+    <li>Suporte pedagógico ao aluno.</li>
+    <li>Orientação contínua à empresa.</li>
+    <li>Promoção da qualidade da formação profissional.</li>
+</ul>
+
+<h5>5.3.3. Curso de Assistente de Logística</h5>
+<p>O programa inicia em 2026 com a oferta do curso de <strong>Assistente de Logística</strong>, área estratégica para a indústria. A formação prepara o jovem para atuar com eficiência nas operações logísticas da empresa, contribuindo diretamente para a produtividade e organização.</p>
+<p><strong>O que o jovem aprende:</strong></p>
+<ul>
+    <li>Processos logísticos industriais.</li>
+    <li>Controle de estoque.</li>
+    <li>Movimentação e armazenagem.</li>
+    <li>Organização de fluxos operacionais.</li>
+</ul>
+<p><strong>Detalhes do curso:</strong></p>
+<ul>
+    <li><strong>Carga horária total:</strong> 800 horas.</li>
+    <li><strong>Frente teórica online:</strong> 400 horas, em plataforma própria do SENAI-RS.</li>
+    <li><strong>Vivência prática na empresa:</strong> 400 horas.</li>
+    <li><strong>Estrutura:</strong> módulo único, sem necessidade de rematrícula ao longo do processo.</li>
+    <li><strong>Unidades curriculares:</strong> 10 UCs, cada uma com 40 horas de duração.</li>
+</ul>
+<p><strong>Público-alvo:</strong></p>
+<ul>
+    <li>Jovens com idade entre <strong>14 anos completos e 24 anos incompletos</strong>.</li>
+    <li>Para atuação em ambientes industriais, recomenda-se a partir de <strong>18 anos</strong>.</li>
+</ul>
+
+<h5>5.3.4. Diferenciais Operacionais</h5>
+<ul>
+    <li><strong>Ingresso flexível:</strong> a adesão pode ocorrer a qualquer momento, respeitadas as datas previstas no calendário de ingressos mensais. Não existe um calendário fixo semestral ou anual, permitindo turmas contínuas.</li>
+    <li><strong>Sem número mínimo de aprendizes:</strong> na modalidade EAD, não há exigência de número mínimo, facilitando a adesão por empresas de diferentes portes e localidades.</li>
+    <li><strong>Atendimento a municípios elegíveis:</strong> o programa foi desenvolvido para ampliar o atendimento a empresas localizadas em regiões distantes de uma unidade do SENAI-RS.</li>
+    <li><strong>Processo de adesão:</strong> quando uma indústria decide aderir ao programa, a organização confirma o interesse por meio de uma <strong>carta de indicação</strong>.</li>
+    <li><strong>Responsabilidade da empresa:</strong> a seleção e contratação dos jovens aprendizes é de responsabilidade da empresa contratante, seguindo os critérios estabelecidos no plano de curso.</li>
+</ul>
+
+<h5>5.3.5. Regras para oferta da modalidade EAD</h5>
+<p>A oferta da Aprendizagem Industrial na modalidade EAD está condicionada ao atendimento das disposições estabelecidas na <strong>Portaria MTE nº 3.872/2023</strong>, especialmente em seu artigo 32, que prevê a autorização para programas de aprendizagem profissional a distância na hipótese de o <strong>número potencial de aprendizes para contratação ser inferior a cem (100) no município</strong>.</p>
+
+<p>Para que a modalidade EAD seja autorizada, os municípios devem observar o limite de 100 cotas totais apuradas no período de referência, conforme critérios estabelecidos pelo MTE. A relação dos municípios elegíveis é publicada regularmente no portal oficial do Ministério do Trabalho e Emprego.</p>
+
+<p>🔗 <strong>Consulte a lista de municípios autorizados:</strong><br>
+<a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/areas-de-atuacao/insercao-de-aprendiz-1" target="_blank" style="color: #003399; font-weight: bold;">www.gov.br/trabalho-e-emprego/assuntos/inspecao-do-trabalho/insercao-de-aprendiz</a></p>
+
+<p>Além disso, a entidade qualificadora deve:</p>
+<ul>
+    <li>Manter ao menos um curso de aprendizagem profissional na modalidade presencial em atividade na Unidade da Federação, devidamente cadastrado no CNAP.</li>
+    <li>Realizar <strong>visitas in loco</strong> em cada estabelecimento contratante para acompanhamento das atividades práticas, em intervalo máximo de noventa dias.</li>
+    <li>Observar os ritos e fluxos internos para cadastro do curso no Cadastro Nacional de Aprendizagem Profissional (CNAP), quando for o caso.</li>
+</ul>
+
+<p><span class="badge-orange">Importante:</span> A oferta da modalidade EAD deve ser precedida de análise criteriosa da viabilidade e do atendimento aos requisitos legais, garantindo que a formação a distância seja utilizada como uma alternativa legítima para ampliar o acesso à qualificação profissional, e não como mera opção de redução de custos, sempre com foco no interesse do aprendiz e na qualidade da formação.</p>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 6: ASPECTOS TRABALHISTAS E REMUNERAÇÃO                -->
+<!-- ============================================================ -->
+<h3>6. Aspectos Trabalhistas e Remuneração</h3>
+
+<h4>6.1. Salário e Direitos</h4>
+
+<p>O aprendiz tem direito ao <strong>salário-mínimo-hora</strong>, nos termos do art. 428, § 2º, da CLT, observando-se, caso exista, o piso estadual ou regional, se mais favorável ao aprendiz.</p>
+
+<p><strong>Cálculo do salário:</strong></p>
+<ul>
+    <li>O salário-hora é obtido dividindo-se o salário mínimo vigente por <strong>220 horas</strong> (jornada mensal padrão).</li>
+    <li>O valor mensal é calculado multiplicando-se o salário-hora pela carga horária mensal do aprendiz (ex: 80 a 88 horas para jornada de 20h/semana).</li>
+</ul>
+
+<p><strong>📊 Base de cálculo do salário mínimo:</strong></p>
+<p>Os valores do salário mínimo nacional, utilizados como referência para o cálculo do salário-hora do aprendiz, são atualizados anualmente pelo governo federal.</p>
+<p>🔗 Consulte a <strong>planilha oficial do Ministério do Trabalho e Emprego</strong> com a série histórica do salário mínimo (2021 a 2026):<br>
+<a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/areas-de-atuacao/documentos-xlsx/salario-minimo-nacional_planilha-salario-2021-2026.xlsx" target="_blank" style="color: #003399; font-weight: bold;">📊 Salário Mínimo Nacional – Planilha Oficial MTE (2021–2026)</a></p>
+
+<p><strong>Adicionais:</strong></p>
+<ul>
+    <li><strong>Adicional noturno:</strong> devido ao aprendiz maior de 18 anos que trabalhe em horário noturno (22h às 5h).</li>
+    <li><strong>Adicional de insalubridade:</strong> devido sobre o salário-mínimo, conforme art. 192 da CLT, para maiores de 18 anos expostos a agentes nocivos à saúde.</li>
+    <li><strong>Adicional de periculosidade:</strong> devido sobre o salário recebido, para maiores de 18 anos expostos a atividades perigosas.</li>
+    <li>Em caso de incidência de ambos, o aprendiz recebe apenas o de <strong>maior valor</strong>.</li>
+</ul>
+
+<p><strong>Descontos permitidos (art. 462 da CLT):</strong></p>
+<ul>
+    <li>Adiantamentos salariais.</li>
+    <li>Dispositivos de lei (ex: INSS).</li>
+    <li>Previsão em convenção ou acordo coletivo.</li>
+</ul>
+<p>É vedado efetuar quaisquer outros descontos no salário do aprendiz.</p>
+
+<p><strong>Jornada de trabalho:</strong></p>
+<ul>
+    <li>As horas destinadas às <strong>atividades teóricas</strong> integram a jornada e devem ser remuneradas.</li>
+    <li>Jornada máxima: 6 horas diárias (regra geral).</li>
+    <li>Jornada excepcional: 8 horas diárias, se concluído o ensino fundamental e com teoria + prática no mesmo dia.</li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 6.2 – COM EXEMPLO R$ 8,50                             -->
+<!-- ============================================================ -->
+<h4>6.2. Cálculo do Salário (Fórmula)</h4>
+<p style="background-color: #f2f4f8; padding: 10px 15px; border-radius: 4px; font-family: monospace; font-size: 16px;">
+    Salário Mensal = (Salário-hora × horas trabalhadas semanais × número de semanas no mês × 7) / 6
+</p>
+<p><strong>Exemplo:</strong> Salário-hora <strong>R$ 8,50</strong>, jornada de 20h/semana, mês de 30 dias → <strong>R$ 850,00</strong>.</p>
+
+<h4>6.3. Jornada de Trabalho</h4>
+<ul>
+    <li><strong>Jornada máxima:</strong> 6 horas diárias (regra geral).</li>
+    <li><strong>Jornada excepcional:</strong> 8 horas diárias, se concluído o ensino fundamental e com teoria + prática no mesmo dia.</li>
+    <li><strong>Trabalho noturno:</strong> Proibido para menores de 18 anos.</li>
+    <li><strong>Controle de ponto:</strong> Obrigatório para estabelecimentos com ≥ 20 empregados.</li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 7: PROCESSO DE CONTRATAÇÃO COM O SENAI                -->
+<!-- ============================================================ -->
+<h3>7. Processo de Contratação com o SENAI-RS</h3>
+
+<h4>7.1. Formas de Contratação</h4>
+<table>
+    <tr><th style="width: 25%;">Forma</th><th>Descrição</th></tr>
+    <tr><td><strong>Contratação Direta</strong></td>
+        <td>Regra geral. O estabelecimento é o <strong>empregador</strong> do aprendiz. Assina a CTPS e o contrato de trabalho. O SENAI atua como entidade formadora.</td>
+    </tr>
+    <tr><td><strong>Modalidade Alternativa</strong></td>
+        <td>Atividades práticas realizadas em entidade concedente (órgãos públicos, OSC). Exige Termo de Compromisso com a Inspeção do Trabalho e prioriza jovens em vulnerabilidade social.</td>
+    </tr>
+</table>
+
+<h4>7.2. Documentos e Formalização</h4>
+<p><strong>Documentos necessários:</strong> RG/CPF do aprendiz, comprovante de residência, comprovante de escolaridade, CTPS, PIS/PASEP, documento do responsável legal e termo de consentimento (se menor de 18 anos).</p>
+<p><strong>Informações obrigatórias no contrato:</strong> Termos inicial/final, nome do curso, função, jornada, remuneração, dados das partes, local das atividades, descrição das práticas e calendário.</p>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 7.3 – CHECK-LIST SOMENTE ATÉ O TÓPICO 6               -->
+<!-- ============================================================ -->
+<h4>7.3. Check-list para Contratação</h4>
+<div class="checklist-box">
+    <ol>
+        <li><strong>Verificar</strong> se o estabelecimento é obrigado (≥ 7 empregados).</li>
+        <li><strong>Calcular</strong> a cota (5% a 15%).</li>
+        <li><strong>Escolher</strong> a modalidade (AIB/AIT), modelo (Regular/Dual) e tipo (Presencial/EAD).</li>
+        <li><strong>Selecionar</strong> o candidato, respeitando prioridades legais.</li>
+        <li><strong>Matricular</strong> o aprendiz no programa do SENAI-RS.</li>
+        <li><strong>Formalizar</strong> o contrato entre empregador e aprendiz, com anotação na CTPS (eSocial, categoria 103).</li>
+    </ol>
+</div>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 8: RESPONSABILIDADES                                   -->
+<!-- ============================================================ -->
+<h3>8. Responsabilidades dos Atores Envolvidos</h3>
+
+<h4>8.1. O Empregador</h4>
+<ul>
+    <li>Cumprir a cota de aprendizagem.</li>
+    <li><strong>Observar o que preconiza a Lista TIP (Decreto nº 6.481/2008)</strong>, assegurando que as atividades práticas atribuídas a aprendizes de 14 a 18 anos sejam permitidas e não ofereçam riscos ao seu desenvolvimento físico, moral e psicológico.</li>
+    <li>Matricular o aprendiz no programa de formação do SENAI-RS.</li>
+    <li>Remunerar corretamente e garantir todos os direitos trabalhistas.</li>
+    <li>Designar monitor experiente para supervisionar as atividades práticas.</li>
+    <li>Proporcionar ambiente de respeito e reconhecimento à condição especial do aprendiz.</li>
+</ul>
+
+<h4>8.2. O SENAI-RS (Entidade Qualificadora e Formadora)</h4>
+<ul>
+    <li><strong>Elaborar</strong> o programa técnico-pedagógico e submetê-lo ao Cadastro Nacional de Aprendizagem Profissional (CNAP).</li>
+    <li><strong>Utilizar a Classificação Brasileira de Ocupações (CBO)</strong> como parâmetro.</li>
+    <li><strong>Observar</strong> as atividades proibidas para aprendizes de 14 a 18 anos (<strong>Lista TIP – Decreto nº 6.481, de 12 de junho de 2008</strong>).</li>
+    <li><strong>Oferecer</strong> estrutura adequada: instalações, equipamentos, pessoal habilitado e laboratórios.</li>
+    <li><strong>Disponibilizar</strong> práticas protegidas em laboratórios quando as atividades práticas forem proibidas para menores de 18 anos.</li>
+    <li><strong>Acompanhar</strong> as atividades práticas do aprendiz na empresa, por meio de supervisão pedagógica.</li>
+</ul>
+
+<h4>8.3. O Aprendiz</h4>
+<ul>
+    <li>Executar com zelo e diligência as tarefas necessárias à sua formação.</li>
+    <li>Frequentar a escola regular, se não concluiu o Ensino Médio.</li>
+    <li>Obedecer às normas internas da empresa e da entidade formadora.</li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 8.4 – IMPACTO E RETORNO                               -->
+<!-- ============================================================ -->
+<h4>8.4. Impacto e Retorno para a Indústria</h4>
+<p>A <strong>efetivação de jovens após o período de aprendizagem é uma realidade frequente</strong> no SENAI-RS, evidenciando o impacto positivo do programa na <strong>retenção de talentos</strong> e na renovação das equipes produtivas. Empresas que investem na formação de aprendizes com o SENAI-RS colhem benefícios que vão além do cumprimento legal:</p>
+<ul>
+    <li><strong>Redução da rotatividade</strong> – jovens formados na cultura da empresa tendem a permanecer por mais tempo.</li>
+    <li><strong>Produtividade crescente</strong> – aprendizes que crescem dentro da organização conhecem os processos e agregam valor rapidamente.</li>
+    <li><strong>Inovação e novas perspectivas</strong> – jovens trazem familiaridade com tecnologias digitais e novas formas de pensar.</li>
+</ul>
+<p>O SENAI-RS, portanto, contribui ativamente para a construção de um <strong>futuro mais justo, inovador e competitivo</strong> para o estado do Rio Grande do Sul, atuando como agente de transformação e desenvolvimento sustentável da indústria gaúcha.</p>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 9: PERGUNTAS FREQUENTES (FAQs)                        -->
+<!-- ============================================================ -->
+<h3>9. Perguntas Frequentes (FAQs) – Foco SENAI-RS</h3>
+
+<table>
+    <tr><th style="width: 30%;">Pergunta</th><th>Resposta</th></tr>
+    <tr><td><strong>O programa do SENAI é gratuito?</strong></td>
+        <td>Sim. <strong>100% gratuito</strong> para indústrias que contribuem regularmente para o SENAI via folha de pagamento (contribuição compulsória). Não há cobrança de matrícula, mensalidade ou material didático.</td>
+    </tr>
+    <tr><td><strong>Qual é o custo para empresas não industriais?</strong></td>
+        <td>Empresas não industriais e não contribuintes assumem <strong>integralmente os custos</strong> da formação. A precificação é realizada pelo Coordenador Técnico do SENAI-RS, observando as particularidades locais.</td>
+    </tr>
+    <tr><td><strong>Qual a duração máxima do contrato?</strong></td>
+        <td>Máximo de <strong>2 anos</strong>, salvo para PCD, cujo prazo pode ser estendido com base em necessidades específicas de desenvolvimento.</td>
+    </tr>
+    <tr><td><strong>Pode contratar aprendiz para atividades insalubres?</strong></td>
+        <td>Sim, com restrições. Apenas aprendizes com <strong>idade entre 18 e 24 anos</strong>. Alternativamente, o SENAI oferece <strong>ambiente protegido</strong> (laboratórios) para adolescentes de 14 a 17 anos.</td>
+    </tr>
+    <tr><td><strong>O SENAI acompanha o aprendiz na empresa?</strong></td>
+        <td>Sim. O SENAI realiza <strong>supervisão pedagógica</strong> e acompanhamento documental das atividades práticas durante toda a vigência do contrato.</td>
+    </tr>
+    <tr><td><strong>O jovem pode ser aprendiz mais de uma vez?</strong></td>
+        <td>Sim. O jovem pode celebrar <strong>contratos sucessivos</strong> de aprendizagem com empresas diferentes (um contrato após o outro). <strong>Não é permitido</strong> ter dois contratos de aprendizagem vigentes simultaneamente, mesmo que sejam com empresas distintas. Com o mesmo empregador, a celebração de contratos sucessivos é possível, desde que: (1) respeitado o <strong>interstício mínimo de 6 (seis) meses</strong> entre o término de um contrato e o início do outro, conforme determina o <strong>art. 452 da CLT</strong> e a <strong>Orientação Jurisprudencial 163 da SDI-1 do TST</strong>; e (2) o novo contrato esteja vinculado a <strong>um programa de aprendizagem distinto, com curso de qualificação diferente</strong> do anterior (ocupação/CBO diferente ou curso de nível mais complexo). A repetição do mesmo curso com o mesmo empregador não é admitida, pois fere o princípio da complexidade progressiva da formação profissional, previsto no art. 428, § 4º, da CLT.</td>
+    </tr>
+    <tr><td><strong>O que é a lista TIP?</strong></td>
+        <td>As empresas devem observar o que preconiza a <strong>Lista TIP (Decreto nº 6.481/2008)</strong> para definir as atividades práticas <strong>permitidas ou proibidas</strong> para aprendizes de 14 a 18 anos, garantindo total segurança e conformidade legal.</td>
+    </tr>
+    <tr><td><strong>Como funciona o ingresso no programa EAD?</strong></td>
+        <td>O ingresso é <strong>flexível e contínuo</strong>. A adesão ocorre mediante carta de indicação da empresa, e o SENAI-RS organiza as turmas conforme a demanda. Não há número mínimo de alunos por turma na modalidade EAD.</td>
+    </tr>
+    <tr><td><strong>O que é a Certidão de Regularidade?</strong></td>
+        <td>É um documento oficial emitido pelo MTE que atesta se a empresa está cumprindo a cota de aprendizagem. Pode ser emitido gratuitamente no site <a href="https://certidoes.sit.trabalho.gov.br/aprendiz" target="_blank">certidoes.sit.trabalho.gov.br/aprendiz</a>.</td>
+    </tr>
+    <tr><td><strong>Como é feita a fiscalização do cumprimento da cota?</strong></td>
+        <td>A fiscalização é realizada pela Inspeção do Trabalho (Subsecretaria de Inspeção do Trabalho – SIT/MTE). Auditores-Fiscais do Trabalho verificam o cumprimento da cota, a regularidade dos contratos e a execução do programa de aprendizagem.</td>
+    </tr>
+    <tr><td><strong>Quais municípios podem ofertar a modalidade EAD?</strong></td>
+        <td>A oferta EAD é autorizada para municípios onde o número potencial de aprendizes para contratação seja <strong>inferior a 100</strong>, conforme critérios estabelecidos na Portaria MTE nº 3.872/2023. A lista atualizada dos municípios elegíveis é publicada regularmente no portal do MTE.</td>
+    </tr>
+</table>
+
+<!-- ============================================================ -->
+<!-- SEÇÃO 10: CONTATOS E INFORMAÇÕES FINAIS                     -->
+<!-- ============================================================ -->
+<h3>10. Contatos e Informações Estratégicas</h3>
+<p><strong>Site oficial:</strong> <a href="https://www.senairs.org.br/jovem-aprendiz" target="_blank">www.senairs.org.br/jovem-aprendiz</a><br>
+<strong>Site EAD:</strong> <a href="https://www.senairs.org.br/jovem-aprendiz-ead" target="_blank">www.senairs.org.br/jovem-aprendiz-ead</a><br>
+<strong>Certidão de Regularidade:</strong> <a href="https://certidoes.sit.trabalho.gov.br/aprendiz" target="_blank">certidoes.sit.trabalho.gov.br/aprendiz</a><br>
+<strong>Municípios autorizados para EAD:</strong> <a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/areas-de-atuacao/insercao-de-aprendiz-1" target="_blank">Consulta pública MTE</a><br>
+<strong>Planilha Salário Mínimo MTE:</strong> <a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/areas-de-atuacao/documentos-xlsx/salario-minimo-nacional_planilha-salario-2021-2026.xlsx" target="_blank">Baixar planilha oficial (2021-2026)</a><br>
+<strong>WhatsApp (Atendimento direto):</strong> (51) 9144-8356<br>
+<strong>Unidades SENAI-RS:</strong> Consulte a unidade mais próxima para orientações específicas sobre adequação de cursos, logística e parcerias.</p>
+
+<div class="highlight-box">
+    <p><strong>📌 Transforme a obrigação legal em vantagem competitiva com o SENAI-RS.</strong></p>
+    <p>Conte com a maior rede de educação profissional da América Latina para desenvolver os talentos que sua empresa precisa para o futuro da indústria, com modelos presenciais e EAD de excelência.</p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p><strong>SENAI Serviço Nacional de Aprendizagem Industrial</strong><br>
+    Departamento Regional do Rio Grande do Sul | Sistema FIERGS</p>
+    <p style="font-size: 12px; color: #999;">Guia completo e exclusivo para contratação do Programa de Aprendizagem com o SENAI-RS – Versão 2026.</p>
+    <p style="font-size: 12px; color: #999;">Atualizado com base nas informações oficiais do site <a href="https://www.senairs.org.br/jovem-aprendiz-ead">www.senairs.org.br/jovem-aprendiz-ead</a> e nas planilhas oficiais de cursos do SENAI-RS.</p>
+    <p style="font-size: 12px; color: #999;">Legislação atualizada conforme Decreto nº 9.579/2018 (alterado pelo Decreto nº 11.479/2023) e Portaria MTE nº 3.872/2023.</p>
+</div>
+
+</div> <!-- Fim do #content-to-pdf -->
+
+<!-- ===== BOTÃO DE DOWNLOAD (também no final) ===== -->
+<div style="text-align: center; margin-top: 30px;" class="no-print">
+    <button class="download-btn" id="downloadPdfBtn2">
+        📄 Baixar em PDF
+    </button>
+</div>
+
+<!-- ===== SCRIPT PARA GERAR PDF DIRETAMENTE ===== -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn1 = document.getElementById('downloadPdfBtn');
+        const btn2 = document.getElementById('downloadPdfBtn2');
+        const element = document.getElementById('content-to-pdf');
+
+        function generatePDF() {
+            btn1.disabled = true;
+            btn2.disabled = true;
+            btn1.textContent = '⏳ Gerando PDF...';
+            btn2.textContent = '⏳ Gerando PDF...';
+
+            const opt = {
+                margin:        [0.5, 0.5, 0.5, 0.5],
+                filename:      'Guia_Aprendizagem_SENAI_RS_2026.pdf',
+                image:         { type: 'jpeg', quality: 0.98 },
+                html2canvas:   { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:         { unit: 'in', format: 'a4', orientation: 'portrait' },
+                pagebreak:     { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(function() {
+                btn1.disabled = false;
+                btn2.disabled = false;
+                btn1.textContent = '📄 Baixar em PDF';
+                btn2.textContent = '📄 Baixar em PDF';
+            }).catch(function(err) {
+                console.error('Erro ao gerar PDF:', err);
+                btn1.disabled = false;
+                btn2.disabled = false;
+                btn1.textContent = '📄 Baixar em PDF';
+                btn2.textContent = '📄 Baixar em PDF';
+                alert('Ocorreu um erro ao gerar o PDF. Tente novamente ou utilize a opção de impressão do navegador.');
+            });
+        }
+
+        btn1.addEventListener('click', generatePDF);
+        btn2.addEventListener('click', generatePDF);
+    });
+</script>
+
+</body>
+</html>
